@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<script type="text/javascript" src="http://code.jquery.com/jquery.min.js"></script>
+
+<style>
+	div
+	{
+		font-size:48pt;
+		font-family:times new roman;
+		font-weight:bold;
+		color: white;
+	}
+</style>
+
+</head>
+
+<body>
+    <canvas id="canvas"></canvas>
+	<div id="Uno" style="position: absolute; left: 250px; top: 150px; width:200px; height:100px;">Uno</div>
+	<div id="Dos" style="position: absolute; left: 575px; top: 150px; width:200px; height:100px;">Dos</div>
+	<form style="position: absolute; left: 375px; top: 600px">
+		<input type="text" id="selectedText">
+		<button type="button" id="clickHere">Click here</button>
+	</form>
+</body>
+
+<script>
+$(function(){
+
+    var canvas = document.getElementById("canvas");
+	
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	
+	/*
+	if( /iPhone/i.test(navigator.userAgent) ) {
+		canvas.width = "320";
+		canvas.height = "356";
+	}
+	else {
+		canvas.width = "1200";
+		canvas.height = "900";
+	} */
+	
+    var context = canvas.getContext("2d");
+
+    var circle1 = {x:300,y:300,r:200};
+    var circle2 = {x:625,y:300,r:200};
+
+    context.save();
+	context.fillStyle="#310B5E";
+    context.beginPath();
+    context.arc(circle1.x,circle1.y,circle1.r, 0, 2*Math.PI, false);
+    context.fill();
+
+    context.beginPath();
+    context.fillStyle="#000000";
+    context.globalCompositeOperation="source-atop";
+    context.arc(circle2.x,circle2.y,circle2.r, 0, 2*Math.PI, false);
+    context.fill();
+    context.restore();
+
+	context.fillStyle="537A41";
+    context.beginPath();
+    context.globalCompositeOperation="destination-over";
+    context.arc(circle2.x,circle2.y,circle2.r, 0, 2*Math.PI, false);
+    context.fill();
+	
+    context.globalCompositeOperation="source-over";
+	
+	$("#Uno").click(function() {
+		$("#selectedText").val("Uno");
+	});
+	$("#Dos").click(function() {
+		$("#selectedText").val("Dos");
+	});
+	$("#clickHere").click(function() {
+		console.log($("#selectedText").val());
+	});
+
+});
+</script>
+
+</html>
